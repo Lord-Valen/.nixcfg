@@ -1,6 +1,14 @@
-{ config, lib, pkgs, self, ... }:
-let inherit (lib) fileContents;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  self,
+  ...
+}:
+let
+  inherit (lib) fileContents;
+in
+{
   imports = [ ./common.nix ];
 
   environment = {
@@ -13,24 +21,27 @@ in {
       utillinux
     ];
 
-    shellAliases = let ifSudo = lib.mkIf config.security.sudo.enable;
-    in {
-      # nix
-      nrb = ifSudo "sudo nixos-rebuild";
+    shellAliases =
+      let
+        ifSudo = lib.mkIf config.security.sudo.enable;
+      in
+      {
+        # nix
+        nrb = ifSudo "sudo nixos-rebuild";
 
-      # fix nixos-option for flake compat
-      nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
+        # fix nixos-option for flake compat
+        nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
 
-      # systemd
-      ctl = "systemctl";
-      stl = ifSudo "s systemctl";
-      utl = "systemctl --user";
-      ut = "systemctl --user start";
-      un = "systemctl --user stop";
-      up = ifSudo "s systemctl start";
-      dn = ifSudo "s systemctl stop";
-      jtl = "journalctl";
-    };
+        # systemd
+        ctl = "systemctl";
+        stl = ifSudo "s systemctl";
+        utl = "systemctl --user";
+        ut = "systemctl --user start";
+        un = "systemctl --user stop";
+        up = ifSudo "s systemctl start";
+        dn = ifSudo "s systemctl stop";
+        jtl = "journalctl";
+      };
   };
 
   fonts.fontconfig.defaultFonts = {
@@ -44,7 +55,10 @@ in {
       sandbox = true;
 
       # Give root user and wheel group special Nix privileges.
-      trusted-users = [ "root" "@wheel" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       allowed-users = [ "@wheel" ];
     };
 
