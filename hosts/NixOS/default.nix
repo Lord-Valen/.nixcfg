@@ -130,9 +130,6 @@
 
   # Boot
   boot = {
-
-    kernelPackages = pkgs.linuxPackages_6_6;
-
     # sysctl settings
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642; # https://www.youtube.com/watch?v=PsHRbfZhgXM
