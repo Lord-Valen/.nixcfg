@@ -1,4 +1,12 @@
-{ config, lib, pkgs, suites, profiles, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  suites,
+  profiles,
+  ...
+}:
+{
   imports = lib.concatLists [
     (with profiles.nixos; [
 
@@ -127,8 +135,7 @@
 
     # sysctl settings
     kernel.sysctl = {
-      "vm.max_map_count" =
-        2147483642; # https://www.youtube.com/watch?v=PsHRbfZhgXM
+      "vm.max_map_count" = 2147483642; # https://www.youtube.com/watch?v=PsHRbfZhgXM
     };
 
     # Bootloader
@@ -166,12 +173,20 @@
       #   };
       # };
 
-      availableKernelModules =
-        [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
       kernelModules = [ ];
     };
 
-    kernelModules = [ "kvm-amd" "wl" ];
+    kernelModules = [
+      "kvm-amd"
+      "wl"
+    ];
     #extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
@@ -274,8 +289,7 @@
   };
 
   # Hardware
-  hardware.cpu.amd.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
